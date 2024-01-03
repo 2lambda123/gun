@@ -67,7 +67,7 @@ USE(function(module){
 			for(var k in o){ if(has.call(o, k)){ l.push(k) } }
 			return l;
 		}
-		;(function(){ // max ~1ms or before stack overflow 
+		;(function(){ // max ~1ms or before stack overflow
 			var u, sT = setTimeout, l = 0, c = 0, sI = (typeof setImmediate !== ''+u && setImmediate) || sT; // queueMicrotask faster but blocks UI
 			sT.poll = sT.poll || function(f){ //f(); return; // for testing
 				if((1 >= (+new Date - l)) && c++ < 3333){ f(); return }
@@ -364,7 +364,7 @@ USE(function(module){
 			function ham(val, key, soul, state, msg){
 				var ctx = msg._||'', root = ctx.root, graph = root.graph, lot, tmp;
 				var vertex = graph[soul] || empty, was = state_is(vertex, key, 1), known = vertex[key];
-				
+
 				var DBG = ctx.DBG; if(tmp = console.STAT){ if(!graph[soul] || !known){ tmp.has = (tmp.has || 0) + 1 } }
 
 				var now = State(), u;
@@ -399,7 +399,7 @@ USE(function(module){
 				var tmp = ctx.match; tmp.end = 1;
 				if(tmp === root.hatch){ if(!(tmp = ctx.latch) || tmp.end){ delete root.hatch } else { root.hatch = tmp } }
 				ctx.hatch && ctx.hatch(); // TODO: rename/rework how put & this interact.
-				setTimeout.each(ctx.match, function(cb){cb && cb()}); 
+				setTimeout.each(ctx.match, function(cb){cb && cb()});
 				if(!(msg = ctx.msg) || ctx.err || msg.err){ return }
 				msg.out = universe;
 				ctx.root.on('out', msg);
@@ -524,7 +524,7 @@ USE(function(module){
 		if(typeof window !== "undefined"){ (window.GUN = window.Gun = Gun).window = window }
 		try{ if(typeof MODULE !== "undefined"){ MODULE.exports = Gun } }catch(e){}
 		module.exports = Gun;
-		
+
 		(Gun.window||{}).console = (Gun.window||{}).console || {log: function(){}};
 		(C = console).only = function(i, s){ return (C.only.i && i === C.only.i && C.only.i++) && (C.log.apply(C, arguments) || s) };
 
@@ -718,7 +718,7 @@ USE(function(module){
 			cat.echo && setTimeout.each(Object.keys(cat.echo), function(lat){ (lat = cat.echo[lat]) && lat.on('in', msg) },0,99); // & linked at chains // TODO: .keys( is slow // BUG: Some re-in logic may depend on this being sync.
 
 			if(((msg.$$||'')._||at).soul){ // comments are linear, but this line of code is non-linear, so if I were to comment what it does, you'd have to read 42 other comments first... but you can't read any of those comments until you first read this comment. What!? // shouldn't this match link's check?
-				// is there cases where it is a $$ that we do NOT want to do the following? 
+				// is there cases where it is a $$ that we do NOT want to do the following?
 				if((sat = cat.next) && (sat = sat[key])){ // TODO: possible trick? Maybe have `ionmap` code set a sat? // TODO: Maybe we should do `cat.ask` instead? I guess does not matter.
 					tmp = {}; Object.keys(msg).forEach(function(k){ tmp[k] = msg[k] });
 					tmp.$ = (msg.$$||msg.$).get(tmp.get = key); delete tmp.$$; delete tmp.$$$;
@@ -739,7 +739,7 @@ USE(function(module){
 				return; // by default do not link to data that is not a link.
 			}
 			if((tat.echo || (tat.echo = {}))[cat.id] // we've already linked ourselves so we do not need to do it again. Except... (annoying implementation details)
-				&& !(root.pass||'')[cat.id]){ return } // if a new event listener was added, we need to make a pass through for it. The pass will be on the chain, not always the chain passed down. 
+				&& !(root.pass||'')[cat.id]){ return } // if a new event listener was added, we need to make a pass through for it. The pass will be on the chain, not always the chain passed down.
 			if(tmp = root.pass){ if(tmp[link+cat.id]){ return } tmp[link+cat.id] = 1 } // But the above edge case may "pass through" on a circular graph causing infinite passes, so we hackily add a temporary check for that.
 
 			(tat.echo||(tat.echo={}))[cat.id] = cat; // set ourself up for the echo! // TODO: BUG? Echo to self no longer causes problems? Confirm.
@@ -832,7 +832,7 @@ USE(function(module){
 		Gun.chain.get = function(key, cb, as){
 			var gun, tmp;
 			if(typeof key === 'string'){
-				if(key.length == 0) {	
+				if(key.length == 0) {
 					(gun = this.chain())._.err = {err: Gun.log('0 length key!', key)};
 					if(cb){ cb.call(gun, gun._.err) }
 					return gun;
@@ -1121,13 +1121,13 @@ USE(function(module){
 				as.via = at.root.$.get(((as.data||'')._||'')['#'] || at.$.back('opt.uuid')())
 			}
 			as.via.put(as.data, as.ack, as);
-			
+
 
 			return;
 			if(at.get && at.back.soul){
 				tmp = as.data;
 				as.via = at.back.$;
-				(as.data = {})[at.get] = tmp; 
+				(as.data = {})[at.get] = tmp;
 				as.via.put(as.data, as.ack, as);
 				return;
 			}
@@ -1313,7 +1313,7 @@ USE(function(module){
 				if(u === next){ return }
 				if(data === next){ return chain._.on('in', msg) }
 				if(Gun.is(next)){ return chain._.on('in', next._) }
-				var tmp = {}; Object.keys(msg.put).forEach(function(k){ tmp[k] = msg.put[k] }, tmp); tmp['='] = next; 
+				var tmp = {}; Object.keys(msg.put).forEach(function(k){ tmp[k] = msg.put[k] }, tmp); tmp['='] = next;
 				chain._.on('in', {get: key, put: tmp});
 			});
 			return chain;
@@ -1379,7 +1379,7 @@ USE(function(module){
 					/*if('string' == typeof raw){ try{
 						var stat = console.STAT || {};
 						//console.log('HEAR:', peer.id, (raw||'').slice(0,250), ((raw||'').length / 1024 / 1024).toFixed(4));
-						
+
 						//console.log(setTimeout.turn.s.length, 'stacks', parseFloat((-(LT - (LT = +new Date))/1000).toFixed(3)), 'sec', parseFloat(((LT-ST)/1000 / 60).toFixed(1)), 'up', stat.peers||0, 'peers', stat.has||0, 'has', stat.memhused||0, stat.memused||0, stat.memax||0, 'heap mem max');
 					}catch(e){ console.log('DBG err', e) }}*/
 					hear.d += raw.length||0 ; ++hear.c } // STATS!
@@ -1401,7 +1401,7 @@ USE(function(module){
 							puff(go, 0);
 						}());
 					});
-					raw = ''; // 
+					raw = ''; //
 					return;
 				}
 				if('{' === tmp || ((raw['#'] || Object.plain(raw)) && (msg = raw))){
@@ -1792,7 +1792,7 @@ USE(function(module){
 					root.on('in', {'@': id, err: err, ok: 0}); // localStorage isn't reliable, so make its `ok` code be a low number.
 				});
 			}
-		
+
 		});
 	})(USE, './localStorage');
 }());
