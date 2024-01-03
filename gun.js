@@ -1,19 +1,25 @@
-;(function(){
+;
+(function() {
 
-  /* UNBUILD */
-  function USE(arg, req){
-    return req? require(arg) : arg.slice? USE[R(arg)] : function(mod, path){
-      arg(mod = {exports: {}});
-      USE[R(path)] = mod.exports;
-    }
-    function R(p){
-      return p.split('/').slice(-1).toString().replace('.js','');
-    }
-  }
-  if(typeof module !== "undefined"){ var MODULE = module }
-  /* UNBUILD */
+/* UNBUILD */
+function USE(arg, req) {
+  return req ? require(arg)
+         : arg.slice
+             ? USE[R(arg)]
+             : function(mod, path) {
+                 arg(mod = {exports : {}});
+                 USE[R(path)] = mod.exports;
+               } function R(p) {
+                 return p.split('/').slice(-1).toString().replace('.js', '');
+               }
+}
+if (typeof module !== "undefined") {
+  var MODULE = module
+}
+/* UNBUILD */
 
-	;USE(function(module){
+;
+USE(function(module){
 		// Shim for generic javascript utilities.
 		String.random = function(l, c){
 			var s = '';
@@ -92,7 +98,8 @@
 		}());
 	})(USE, './shim');
 
-	;USE(function(module){
+;
+USE(function(module){
 		// On event emitter generic javascript utility.
 		module.exports = function onto(tag, arg, as){
 			if(!tag){ return {to: onto} }
@@ -129,7 +136,8 @@
 		};
 	})(USE, './onto');
 
-	;USE(function(module){
+;
+USE(function(module){
 		// Valid values are a subset of JSON: null, binary, number (!Infinity), text,
 		// or a soul relation. Arrays need special algorithms to handle concurrency,
 		// so they are not supported directly. Use an extension that supports them if
@@ -146,7 +154,8 @@
 		}
 	})(USE, './valid');
 
-	;USE(function(module){
+;
+USE(function(module){
 		USE('./shim');
 		function State(){
 			var t = +new Date;
@@ -175,7 +184,8 @@
 		module.exports = State;
 	})(USE, './state');
 
-	;USE(function(module){
+;
+USE(function(module){
 		USE('./shim');
 		function Dup(opt){
 			var dup = {s:{}}, s = dup.s;
@@ -205,7 +215,8 @@
 		module.exports = Dup;
 	})(USE, './dup');
 
-	;USE(function(module){
+;
+USE(function(module){
 		// request / response module, for asking and acking messages.
 		USE('./onto'); // depends upon onto!
 		module.exports = function ask(cb, as){
@@ -233,7 +244,8 @@
 		var random = String.random || function(){ return Math.random().toString(36).slice(2) }
 	})(USE, './ask');
 
-	;USE(function(module){
+;
+USE(function(module){
 
 		function Gun(o){
 			if(o instanceof Gun){ return (this._ = {$: this}).$ }
@@ -520,7 +532,8 @@
 		Gun.log.once("welcome", "Hello wonderful person! :) Thanks for using GUN, please ask for help on http://chat.gun.eco if anything takes you longer than 5min to figure out!");
 	})(USE, './root');
 
-	;USE(function(module){
+;
+USE(function(module){
 		var Gun = USE('./root');
 		Gun.chain.back = function(n, opt){ var tmp;
 			n = n || 1;
@@ -561,7 +574,8 @@
 		var empty = {}, u;
 	})(USE, './back');
 
-	;USE(function(module){
+;
+USE(function(module){
 		// WARNING: GUN is very simple, but the JavaScript chaining API around GUN
 		// is complicated and was extremely hard to build. If you port GUN to another
 		// language, consider implementing an easier API to build.
@@ -812,7 +826,8 @@
 		var empty = {}, u, text_rand = String.random, valid = Gun.valid, obj_has = function(o, k){ return o && Object.prototype.hasOwnProperty.call(o, k) }, state = Gun.state, state_is = state.is, state_ify = state.ify;
 	})(USE, './chain');
 
-	;USE(function(module){
+;
+USE(function(module){
 		var Gun = USE('./root');
 		Gun.chain.get = function(key, cb, as){
 			var gun, tmp;
@@ -969,7 +984,8 @@
 		var empty = {}, valid = Gun.valid, u;
 	})(USE, './get');
 
-	;USE(function(module){
+;
+USE(function(module){
 		var Gun = USE('./root');
 		Gun.chain.put = function(data, cb, as){ // I rewrote it :)
 			var gun = this, at = gun._, root = at.root;
@@ -1122,7 +1138,8 @@
 		var iife = function(fn,as){fn.call(as||empty)}
 	})(USE, './put');
 
-	;USE(function(module){
+;
+USE(function(module){
 		var Gun = USE('./root');
 		USE('./chain');
 		USE('./back');
@@ -1131,7 +1148,8 @@
 		module.exports = Gun;
 	})(USE, './index');
 
-	;USE(function(module){
+;
+USE(function(module){
 		var Gun = USE('./index');
 		Gun.chain.on = function(tag, arg, eas, as){ // don't rewrite!
 			var gun = this, cat = gun._, root = cat.root, act, off, id, tmp;
@@ -1263,7 +1281,8 @@
 		var empty = {}, noop = function(){}, u;
 	})(USE, './on');
 
-	;USE(function(module){
+;
+USE(function(module){
 		var Gun = USE('./index'), next = Gun.chain.get.next;
 		Gun.chain.get.next = function(gun, lex){ var tmp;
 			if(!Object.plain(lex)){ return (next||noop)(gun, lex) }
@@ -1308,7 +1327,8 @@
 		var noop = function(){}, event = {stun: noop, off: noop}, u;
 	})(USE, './map');
 
-	;USE(function(module){
+;
+USE(function(module){
 		var Gun = USE('./index');
 		Gun.chain.set = function(item, cb, opt){
 			var gun = this, root = gun.back(-1), soul, tmp;
@@ -1332,7 +1352,8 @@
 		}
 	})(USE, './set');
 
-	;USE(function(module){
+;
+USE(function(module){
 		USE('./shim');
 
 		function Mesh(root){
@@ -1657,7 +1678,8 @@
 
 	})(USE, './mesh');
 
-	;USE(function(module){
+;
+USE(function(module){
 		var Gun = USE('../index');
 		Gun.Mesh = USE('./mesh');
 
@@ -1717,7 +1739,8 @@
 		var noop = function(){}, u;
 	})(USE, './websocket');
 
-	;USE(function(module){
+;
+USE(function(module){
 		if(typeof Gun === 'undefined'){ return }
 
 		var noop = function(){}, store, u;
@@ -1772,19 +1795,34 @@
 		
 		});
 	})(USE, './localStorage');
-
 }());
 
-;(function(){ setTimeout(function(){ var u; // A/B BATTLETEST
-if(typeof GUN === 'undefined'){ return } // disable
-if(!GUN.window){ return } // disable
-if(GUN.version < 0.2022){ return } // disable
-if(GUN.noAB || u !== GUN.testAXE){ return } // diable
-if(localStorage.noTest){ return } // disable
-//if(Math.random() > 0.01){ return } // reached ulimit, shrink sample size.
-console.log("Debugging p2p 'torrent' latency. Disable with `localStorage.noTest=1`.");
-// TEST 1: Check if Rust has memory leak as idle websockets come/go.
-var s = +new Date, ws = new WebSocket(atob('d3NzOi8vZ3VuMDEuYml0Y2h1dGUueHl6L2d1bg'));
-ws.onopen = function(){ GUN.latency = (+new Date - s) }
-ws.onmessage = function(d){ GUN.last = d }
-},9000) }());
+;
+(function() {
+setTimeout(function() {
+  var u; // A/B BATTLETEST
+  if (typeof GUN === 'undefined') {
+    return
+  } // disable
+  if (!GUN.window) {
+    return
+  } // disable
+  if (GUN.version < 0.2022) {
+    return
+  } // disable
+  if (GUN.noAB || u !== GUN.testAXE) {
+    return
+  } // diable
+  if (localStorage.noTest) {
+    return
+  } // disable
+  // if(Math.random() > 0.01){ return } // reached ulimit, shrink sample size.
+  console.log(
+      "Debugging p2p 'torrent' latency. Disable with `localStorage.noTest=1`.");
+  // TEST 1: Check if Rust has memory leak as idle websockets come/go.
+  var s = +new Date,
+      ws = new WebSocket(atob('d3NzOi8vZ3VuMDEuYml0Y2h1dGUueHl6L2d1bg'));
+  ws.onopen = function() { GUN.latency = (+new Date - s) } ws.onmessage =
+      function(d) { GUN.last = d }
+}, 9000)
+}());
